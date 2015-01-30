@@ -1,1 +1,149 @@
-/* Empty. Add your own CSS if you like */
+body {
+    background-color: #6292CC;
+
+}
+
+p.logo-text {
+    text-align: center;
+}
+
+#SideNav {
+    margin-left: 10px;
+    float: left;
+
+}
+
+#speakeasylogo {
+    background-color: #6292CC;
+    margin-left: 400px;
+    float: left;
+
+}
+
+#loginform ul {
+    padding: 0;
+    margin: 0;
+
+}
+
+#loginform li {
+    display: inline;
+    float: left;
+
+}
+
+h2{
+    background-color: #6292CC;
+    text-align:center;
+    border-radius: 10px 10px 0 0;
+}
+
+hr{
+    margin: 10px -50px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin-bottom: 40px;
+}
+div.container{
+    width: 1000px;
+    height: 610px;
+    margin:35px 0;
+    font-family: 'Raleway', sans-serif;
+}
+div.main{
+    width: 300px;
+    padding: 10px 50px 25px;
+    font-family: raleway;
+    float:left;
+    margin-left: 100px;
+    margin-top:0px;
+}
+input[type=text],input[type=password]{
+    width: 20%;
+    height: 40px;
+    padding: 5px;
+    margin-bottom: 25px;
+    margin-top: 5px;
+    border: 1px solid #000000;
+    color: #4f4f4f;
+    font-size: 16px;
+    border-radius: 5px;
+}
+input[type=textarea] {
+    width: 20%;
+    height: 40px;
+    padding: 5px;
+    margin-bottom: 25px;
+    margin-top: 5px;
+    border: 1px solid #000000;
+    color: #4f4f4f;
+    font-size: 16px;
+    border-radius: 5px;
+}
+label{
+    color: #464646;
+    font-size: 14px;
+    font-weight: bold;
+}
+center{
+    font-size:32px;
+}
+.note{
+    color:red;
+}
+.valid{
+    color:green;
+}
+.back{
+    text-decoration: none;
+    border: 1px solid rgb(0, 143, 255);
+    background-color: rgb(0, 214, 255);
+    padding: 3px 20px;
+    border-radius: 2px;
+    color: black;
+}
+input[type=button]{
+    font-size: 16px;
+    background: linear-gradient(#6292CC 5%, #6292CC 100%);
+    border: 1px solid #000000;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px 0;
+    outline:none;
+}
+
+
+input[type=button]:hover{
+    background: linear-gradient(#6292CC 5%, #6292CC 100%);
+
+}
+
+#logo {
+    margin-left: 3%;
+
+}
+
+#id_form {
+    font-family: geneva;
+    margin-left: 3%;
+    background-color: #ffffff;
+    border-radius: 0px;
+    width: 39%;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+
+}
+
+.pane{
+    background-image: url("/img/bkg.png");
+    background-repeat: no-repeat;
+    position: center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
