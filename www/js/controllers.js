@@ -4,6 +4,8 @@ angular.module('starter.controllers', [])
       $scope.data = {};
 
       $scope.login = function() {
+         
+
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
           $state.go('tab.dash');
         }).error(function(data) {
@@ -15,11 +17,27 @@ angular.module('starter.controllers', [])
       }
     })
 
-    .controller('SignInCtrl', function($scope, $state) {
+    .controller('SignInCtrl', function($scope, $state, $http) {
 
       $scope.signIn = function(user) {
-        console.log('Sign-In', user);
-        $state.go('tab.dash');
+
+        $http.post("http://api.maggiestcloud.com/login", {email: user.email, password: user.password} )
+          .success(function(data){ console.log(data);
+            if (data.status.length && data.status == "success") {
+              console.log("success");
+              $state.go('tab.dash');
+            }
+            else {
+              $state.go('signIn', {errorMessage: "Invalid Login"});
+            }
+          })
+           .error(function(data){
+            console.log("error");
+             $state.go('signIn', {errorMessage: "Invalid Login"});
+          });
+
+       /* console.log('Sign-In', user);
+        $state.go('tab.dash');*/
       };
 
     })
