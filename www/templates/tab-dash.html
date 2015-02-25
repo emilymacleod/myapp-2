@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="/bower_components/core-item/core-item.html">
+    <link rel="import" href="/bower_components/core-menu/core-menu.html">
+    <link rel="import" href="/bower_components/core-icon/core-icon.html">
+    <link rel="import" href="/bower_components/core-scroll-header-panel/core-scroll-header-panel.html">
+    <link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="/bower_components/paper-dropdown/paper-dropdown.html">
+    <link rel="import" href="/bower_components/paper-item/paper-item.html">
+
+
+<body>
+
+<div class="container">
+
+    <core-scaffold>
+        <core-header-panel flex mode="seamed" navigation>
+            <core-toolbar>Speakeasy</core-toolbar>
+
+                <paper-dropdown-menu label="Profile">
+                    <paper-dropdown class="dropdown">
+                        <core-menu class="menu">
+                            <a href="/account.html"><paper-item>Account</paper-item></a>
+                            <a href="http://www.google.com"><paper-item>Settings</paper-item></a>
+                            <a href="http://www.google.com"><paper-item>ETC</paper-item></a>
+                            <a href="http://www.google.com"><paper-item>ETC</paper-item></a>
+                        </core-menu>
+                    </paper-dropdown>
+                </paper-dropdown-menu>
+        </core-header-panel>
+
+
+            <button onclick="startRecording(this);">record</button>
+            <button onclick="stopRecording(this);">stop</button>
+
+            <h2>Recordings</h2>
+            <ul id="recordingslist"></ul>
+
+            <h2>Log</h2>
+            <pre id="log"></pre>
+
+
+
+        </div>
+
+</core-scaffold>
+</div>
+
+
+
+
+    <script>
+
+
+        function __log(e, data) {
+            log.innerHTML += "\n" + e + " " + (data || '');
+        }
+        var audio_context;
+        var recorder;
+        function startUserMedia(stream) {
+            var input = audio_context.createMediaStreamSource(stream);
+            __log('Media stream created.');
+            // Uncomment if you want the audio to feedback directly
+            //input.connect(audio_context.destination);
+            //__log('Input connected to audio context destination.');
+
+            recorder = new Recorder(input);
+            __log('Recorder initialised.');
+        }
+        function startRecording(button) {
+            recorder && recorder.record();
+            button.disabled = true;
+            button.nextElementSibling.disabled = false;
+            __log('Recording...');
+        }
+        function stopRecording(button) {
+            recorder && recorder.stop();
+            button.disabled = true;
+            button.previousElementSibling.disabled = false;
+            __log('Stopped recording.');
+
+            // create WAV download link using audio data blob
+            createDownloadLink();
+
+            recorder.clear();
+        }
+        function createDownloadLink() {
+            recorder && recorder.exportWAV(function(blob) {
+                var url = URL.createObjectURL(blob);
+                var li = document.createElement('li');
+                var au = document.createElement('audio');
+                var hf = document.createElement('a');
+                var btn = document.createElement('button');
+                var inputTitle = document.createElement('input');
+                var inputDescription = document.createElement('textarea');
+                var br = document.createElement('br');
+                console.log('url',url);
+                au.controls = true;
+                au.src = url;
+                hf.href = url;
+                hf.download = new Date().toISOString() + '.wav';
+                hf.innerHTML = hf.download;
+                hf.id = 'savecontent';
+                btn.type = 'button';
+                btn.id = 'btn-save';
+                btn.innerHTML='save';
+                btn.onclick = function() { return saveAudio(); };
+                inputTitle.type = 'text';
+                inputTitle.id = 'savetitle';
+                inputDescription.id = 'savedescription';
+                li.appendChild(au);
+                li.appendChild(document.createElement('br'));
+                li.appendChild(hf);
+                li.appendChild(document.createElement('br'));
+                li.appendChild(inputTitle);
+                li.appendChild(document.createElement('br'));
+                li.appendChild(inputDescription);
+                li.appendChild(document.createElement('br'));
+                li.appendChild(btn);
+                recordingslist.appendChild(li);
+            });
+        }
+
+        function saveAudio() {
+            var title = document.getElementById('savetitle').value;
+            var description = document.getElementById('savedescription').value;
+            var content = document.getElementById('savecontent').innerHTML;
+            var newClip ={
+                title: title,
+                description: description,
+                content: content,
+                userid: 1
+            };
+
+            socket.emit('newClip',newClip);
+
+            return true;
+        }
+        window.onload = function init() {
+            try {
+                // webkit shim
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+                window.URL = window.URL || window.webkitURL;
+
+                audio_context = new AudioContext;
+                __log('Audio context set up.');
+                __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+            } catch (e) {
+                alert('No web audio support in this browser!');
+            }
+
+            navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+                __log('No live audio input: ' + e);
+            });
+        };
+
+    </script>
+
+    <script src="../www/js/recorder.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="/script.js"></script>
+
+</body>
+
+</html>
