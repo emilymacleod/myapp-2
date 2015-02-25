@@ -1,13 +1,23 @@
 angular.module('starter.controllers', [])
 
     .controller('LoginCtrl', function($scope, LoginService, $ionicPopup, $state) {
+        $scope.errorMessage = "";
       $scope.data = {};
 
       $scope.login = function() {
-         
+
 
         LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
-          $state.go('tab.dash');
+            console.log(data.status);
+           if (data.status == "error"){
+               console.log("error Message");
+               $scope.errorMessage = "Could not login";
+               $state.go("signIn");
+           }
+            else {
+               console.log("success");
+               $state.go('tab.dash');
+           }
         }).error(function(data) {
           var alertPopup = $ionicPopup.alert({
             title: 'Login failed!',
@@ -18,7 +28,7 @@ angular.module('starter.controllers', [])
     })
 
     .controller('SignInCtrl', function($scope, $state, $http) {
-
+        $scope.errorMessage ="";
       $scope.signIn = function(user) {
 
         $http.post("http://api.maggiestcloud.com/login", {email: user.email, password: user.password} )
@@ -28,7 +38,8 @@ angular.module('starter.controllers', [])
               $state.go('tab.dash');
             }
             else {
-              $state.go('signIn', {errorMessage: "Invalid Login"});
+                $scope.errorMessage ="could not login";
+              $state.go('signIn');
             }
           })
            .error(function(data){
