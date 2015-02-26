@@ -2,7 +2,29 @@ angular.module('starter.controllers', [])
 
     .controller('LoginCtrl', function($scope, LoginService, $ionicPopup, $state) {
         $scope.errorMessage = "";
-      $scope.data = {};
+        $scope.data = {};
+        $scope.login = function() {
+
+
+            LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
+                console.log(data.status);
+                if (data.status == "error"){
+                    console.log("error Message");
+                    $scope.errorMessage = "Could not login";
+                    $state.go("signIn");
+                }
+                else {
+                    console.log("success");
+                    $state.go('tab.dash');
+                }
+            }).error(function(data) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Login failed!',
+                    template: 'Please check your credentials!'
+                });
+            });
+        }
+    })
 
 
 
@@ -24,7 +46,8 @@ angular.module('starter.controllers', [])
     
   }
 })
-    .controller('AudioCtrl', function($scope, $state) {
+
+    .controller('CameraCtrl', function($scope, $state) {
   $scope.imageURI = 'http://www.dvinfo.net/forum/attachments/view-video-display-hardware-software/4853d1193613730-smpte-color-bars-bars_pal.jpg';
   $scope.takePhoto = function() {
 var cameraOptions = {
@@ -41,32 +64,7 @@ var cameraOptions = {
       alert("Oops!  Can't take your photo!  Either you backed out before saving a photo, or you are not on a device.  Camera will not work from the emulator...");
     }, cameraOptions);
   }
-});
-
-
-
-      $scope.login = function() {
-
-
-        LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
-            console.log(data.status);
-           if (data.status == "error"){
-               console.log("error Message");
-               $scope.errorMessage = "Could not login";
-               $state.go("signIn");
-           }
-            else {
-               console.log("success");
-               $state.go('tab.dash');
-           }
-        }).error(function(data) {
-          var alertPopup = $ionicPopup.alert({
-            title: 'Login failed!',
-            template: 'Please check your credentials!'
-          });
-        });
-      }
-    })
+})
 
     .controller('SignInCtrl', function($scope, $state, $http) {
         $scope.errorMessage ="";
