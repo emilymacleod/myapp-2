@@ -4,6 +4,47 @@ angular.module('starter.controllers', [])
         $scope.errorMessage = "";
       $scope.data = {};
 
+
+
+
+    .controller('LocationCtrl', function($scope, $state) {
+    $scope.locationString = "Please click the button above to get your location.";
+    $scope.getCurrentLocation = function() {
+       if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+ var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        $scope.locationString = 'Your current location is... Latitude: '+lat+' and Longitude: '+lng;
+        $state.go('tab.location');
+      });
+    } else {
+      $scope.locationString = "Sorry, but the computer Gremlins struck again!  Yell at Rob!";
+      $state.go('tab.location');
+    }
+    
+  }
+})
+    .controller('AudioCtrl', function($scope, $state) {
+  $scope.imageURI = 'http://www.dvinfo.net/forum/attachments/view-video-display-hardware-software/4853d1193613730-smpte-color-bars-bars_pal.jpg';
+  $scope.takePhoto = function() {
+var cameraOptions = {
+      targetWidth: 300,
+      targetHeight: 300
+    };
+    navigator.camera.getPicture(function(imageURI) {
+      
+      $scope.imageURI = imageURI;
+      $state.go('tab.camera');
+
+    }, function(err) {
+
+      alert("Oops!  Can't take your photo!  Either you backed out before saving a photo, or you are not on a device.  Camera will not work from the emulator...");
+    }, cameraOptions);
+  }
+});
+
+
+
       $scope.login = function() {
 
 
