@@ -112,6 +112,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+      .state('tab.signup', {
+        url: '/signup',
+        views: {
+          'tab-friends': {
+            templateUrl: 'templates/signup.html',
+            controller: 'SignupCtrl'
+          }
+        }
+      })
+
+       .state('facebookProfile', {
+    url: '/facebookProfile',
+    templateUrl: 'templates/facebookProfile.html',
+    controller: 'FacebookProfileCtrl'
+  })
+
   .state('tab.camera', {
       url: '/camera',
       views: {
@@ -123,7 +139,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/camera');
+  $urlRouterProvider.otherwise('/login');
 
 });
 
