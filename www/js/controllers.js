@@ -186,7 +186,11 @@ var cameraOptions = {
         $scope.profile = Profile.get($stateParams.profileId);
     })
 */
-    .controller('ProfileCtrl', function($scope) {})
+    .controller('ProfileCtrl', function($scope, $state) {
+        $scope.gotoaccount = function(){
+            $state.go("tab.account")
+        }
+    })
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
