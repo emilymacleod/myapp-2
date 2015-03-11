@@ -104,7 +104,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngCordova'])
                 }
                 else {
                     console.log("success");
-                    $state.go('tab.dash');
+                    $state.go('tab.profile');
                 }
             }).error(function(data) {
                 var alertPopup = $ionicPopup.alert({
@@ -137,7 +137,7 @@ var cameraOptions = {
     .controller('SignInCtrl', function($scope, $state, $http, $localStorage) {
         $scope.data = {};
         if ($localStorage.hasOwnProperty("userid")) {
-            $state.go("tab.camera");
+            $state.go("tab.profile");
         }
 
 
@@ -149,7 +149,7 @@ var cameraOptions = {
             if (data.status.length && data.status == "success") {
                 $localStorage.userid = data.userid;
               console.log("success");
-              $state.go('tab.camera');
+              $state.go('tab.profile');
             }
             else {
                 $scope.data.errorMessage ="could not login";
@@ -169,11 +169,7 @@ var cameraOptions = {
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
+.controller('ChatsCtrl', function($scope) {
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
@@ -187,6 +183,10 @@ var cameraOptions = {
 .controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
   $scope.friend = Friends.get($stateParams.friendId);
 })
+
+.controller('ProfileCtrl', function($scope, $stateParams, Profile) {
+        $scope.profile = Profile.get($stateParams.profileId);
+    })
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
