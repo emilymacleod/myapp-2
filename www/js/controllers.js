@@ -78,16 +78,14 @@ angular.module('starter.controllers', ['ngStorage', 'ngCordova'])
             $location.path("/login");
         }
     };
-});
+})
 
 
 
 
 
 
-
-
-angular.module('starter.controllers', ['ngStorage', 'ngCordova'])
+/*
 
     .controller('LoginCtrl', function($scope, LoginService, $ionicPopup, $state) {
         $scope.errorMessage = "";
@@ -113,7 +111,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngCordova'])
                 });
             });
         }
-    })
+    })*/
 
     .controller('CameraCtrl', function($scope, $state) {
   $scope.imageURI = 'http://www.dvinfo.net/forum/attachments/view-video-display-hardware-software/4853d1193613730-smpte-color-bars-bars_pal.jpg';
@@ -184,9 +182,11 @@ var cameraOptions = {
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('ProfileCtrl', function($scope, $stateParams, Profile) {
+/*.controller('ProfileCtrl', function($scope, $stateParams, Profile) {
         $scope.profile = Profile.get($stateParams.profileId);
     })
+*/
+    .controller('ProfileCtrl', function($scope) {})
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
