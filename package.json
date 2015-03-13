@@ -16,6 +16,8 @@
   },
   "cordovaPlugins": [
     "https://github.com/oauth-io/oauth-phonegap",
-    "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git"
+    "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git",
+    "org.apache.cordova.camera",
+    "org.apache.cordova.media-capture"
   ]
 }
